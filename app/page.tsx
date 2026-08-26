@@ -99,18 +99,18 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f7fafc] text-[#0f2740]">
+    <main className="min-h-screen overflow-hidden bg-[#F0F7FC] text-[#0f2740]">
       {/* NAVBAR */}
       <header className="fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
           <nav className="glass-nav flex items-center justify-between rounded-2xl border border-white/20 px-4 py-3 shadow-lg sm:px-6">
             <a href="#" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#004B87] text-white shadow-md">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B77C4] text-white shadow-md">
                 <Satellite size={21} />
               </div>
 
               <div>
-                <div className="text-sm font-black tracking-[0.15em] text-[#004B87]">
+                <div className="text-sm font-black tracking-[0.15em] text-[#0B77C4]">
                   BHUMIREKA
                 </div>
                 <div className="text-[10px] font-bold tracking-[0.2em] text-slate-500">
@@ -135,15 +135,21 @@ export default function Home() {
 
               <button
                 onClick={() => scrollToRegistration("hackathon")}
-                className="rounded-xl bg-[#FF8C00] px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#ef8200]"
+                className="rounded-xl bg-[#F5C211] px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#E0AA00]"
               >
                 Daftar Sekarang
               </button>
+              <a
+                href="/edit"
+                className="rounded-xl bg-[#F5C211] px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#E0AA00]"
+              >
+                Edit Pendaftaran
+              </a>
             </div>
 
             <button
               onClick={() => setMobileMenu((prev: boolean) => !prev)}
-              className="rounded-xl p-2 text-[#004B87] md:hidden"
+              className="rounded-xl p-2 text-[#0B77C4] md:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenu ? <X /> : <Menu />}
@@ -174,7 +180,7 @@ export default function Home() {
                     setMobileMenu(false);
                     scrollToRegistration("hackathon");
                   }}
-                  className="mt-2 rounded-xl bg-[#FF8C00] px-4 py-3 font-bold text-white"
+                  className="mt-2 rounded-xl bg-[#F5C211] px-4 py-3 font-bold text-white"
                 >
                   Daftar Sekarang
                 </button>
@@ -185,23 +191,23 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="hero-grid relative isolate min-h-screen overflow-hidden">
-        <div className="absolute inset-0 -z-20 bg-[#004B87]" />
+      <section className="bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 py-16">
+        <div className="absolute inset-0 -z-20 bg-[#0B77C4]" />
 
-        <div className="absolute right-[-10%] top-[15%] -z-10 h-[500px] w-[500px] rounded-full bg-[#32CD32]/20 blur-3xl" />
-        <div className="absolute bottom-[-15%] left-[-10%] -z-10 h-[550px] w-[550px] rounded-full bg-[#FF8C00]/20 blur-3xl" />
+        <div className="absolute right-[-10%] top-[15%] -z-10 h-[500px] w-[500px] rounded-full bg-[#52B437]/20 blur-3xl" />
+        <div className="absolute bottom-[-15%] left-[-10%] -z-10 h-[550px] w-[550px] rounded-full bg-[#F5C211]/20 blur-3xl" />
 
         <div className="mx-auto flex min-h-screen max-w-7xl items-center px-4 pb-16 pt-32 sm:px-6 lg:px-8">
           <div className="grid w-full items-center gap-14 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold tracking-wider text-white backdrop-blur">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[#32CD32]" />
+                <span className="h-2 w-2 animate-pulse rounded-full bg-[#52B437]" />
                 INOVASI PRESISI UNTUK MITIGASI MANDIRI
               </div>
 
               <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-[92px]">
                 BHUMIREKA
-                <span className="block text-[#32CD32]">2026</span>
+                <span className="block text-[#52B437]">2026</span>
               </h1>
 
               <p className="mt-7 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
@@ -212,7 +218,7 @@ export default function Home() {
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={() => scrollToRegistration("hackathon")}
-                  className="group flex items-center justify-center gap-3 rounded-2xl bg-[#FF8C00] px-6 py-4 font-black text-white shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
+                  className="group flex items-center justify-center gap-3 rounded-2xl bg-[#F5C211] px-6 py-4 font-black text-white shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
                 >
                   Daftar RPD Challenge
                   <ArrowRight
@@ -223,7 +229,7 @@ export default function Home() {
 
                 <button
                   onClick={() => scrollToRegistration("paper")}
-                  className="group flex items-center justify-center gap-3 rounded-2xl bg-[#32CD32] px-6 py-4 font-black text-[#10321a] shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
+                  className="group flex items-center justify-center gap-3 rounded-2xl bg-[#52B437] px-6 py-4 font-black text-[#2E6C1C] shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
                 >
                   Ajukan Paper
                   <FileText size={18} />
@@ -253,17 +259,17 @@ export default function Home() {
               <div className="relative aspect-square overflow-hidden rounded-[40px] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur">
                 <div className="absolute inset-0 tech-radar opacity-70" />
 
-                <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#32CD32]/50 bg-[#32CD32]/10 shadow-[0_0_80px_rgba(50,205,50,0.25)]">
-                  <div className="absolute inset-5 rounded-full border border-[#FF8C00]/50">
-                    <div className="absolute left-1/2 top-[-10px] h-5 w-5 -translate-x-1/2 rounded-full bg-[#FF8C00] shadow-[0_0_25px_rgba(255,140,0,0.8)]" />
+                <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#52B437]/50 bg-[#52B437]/10 shadow-[0_0_80px_rgba(50,205,50,0.25)]">
+                  <div className="absolute inset-5 rounded-full border border-[#F5C211]/50">
+                    <div className="absolute left-1/2 top-[-10px] h-5 w-5 -translate-x-1/2 rounded-full bg-[#F5C211] shadow-[0_0_25px_rgba(255,140,0,0.8)]" />
                   </div>
                 </div>
 
-                <div className="absolute left-[14%] top-[24%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#32CD32] backdrop-blur">
+                <div className="absolute left-[14%] top-[24%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#52B437] backdrop-blur">
                   <Satellite />
                 </div>
 
-                <div className="absolute right-[14%] top-[20%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#FF8C00] backdrop-blur">
+                <div className="absolute right-[14%] top-[20%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#F5C211] backdrop-blur">
                   <Car />
                 </div>
 
@@ -271,11 +277,11 @@ export default function Home() {
                   <MapPin />
                 </div>
 
-                <div className="absolute bottom-[16%] right-[13%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#32CD32] backdrop-blur">
+                <div className="absolute bottom-[16%] right-[13%] flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-[#52B437] backdrop-blur">
                   <Zap />
                 </div>
 
-                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-[#002f54]/70 p-4 backdrop-blur">
+                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-[#072B54]/70 p-4 backdrop-blur">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs font-bold uppercase tracking-wider text-blue-200">
@@ -285,7 +291,7 @@ export default function Home() {
                         Data → Insight → Action
                       </div>
                     </div>
-                    <div className="h-3 w-3 animate-pulse rounded-full bg-[#32CD32]" />
+                    <div className="h-3 w-3 animate-pulse rounded-full bg-[#52B437]" />
                   </div>
                 </div>
               </div>
@@ -309,16 +315,16 @@ export default function Home() {
 
             <h2 className="section-title mt-4">
               Data presisi
-              <span className="text-[#004B87]"> untuk aksi nyata.</span>
+              <span className="text-[#0B77C4]"> untuk aksi nyata.</span>
             </h2>
           </div>
 
-          <div className="rounded-[32px] bg-[#f3f7fa] p-7 sm:p-10">
+          <div className="rounded-[32px] bg-[#E8F3FA] p-7 sm:p-10">
             <p className="text-lg leading-8 text-slate-600">
               Tantangan keruangan hari ini membutuhkan solusi yang konkret.
               Menghadapi ancaman nyata baik bencana alam dan bencana sosial,
               maka pemanfaatan teknologi satelit navigasi (GNSS) menjadi kunci.
-              <span className="font-bold text-[#004B87]">
+              <span className="font-bold text-[#0B77C4]">
                 {" "}
                 Bhumireka hadir untuk menantang Anda mengubah data presisi
                 tinggi menjadi perangkat lunak dan purwarupa yang murah,
@@ -330,13 +336,13 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="bg-[#f7fafc] px-4 py-24 sm:px-6 lg:px-8">
+      <section id="about" className="bg-[#F0F7FC] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <div className="section-label">02 / TENTANG ACARA</div>
             <h2 className="section-title mt-4">
               Bangun solusi yang
-              <span className="text-[#004B87]"> berguna.</span>
+              <span className="text-[#0B77C4]"> berguna.</span>
             </h2>
             <p className="mt-6 text-lg leading-8 text-slate-600">
               Ajang kolaborasi dan kompetisi pembuatan perangkat lunak dan
@@ -347,7 +353,7 @@ export default function Home() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             <div className="feature-card md:col-span-2">
-              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#004B87] text-white">
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B77C4] text-white">
                 <Satellite size={26} />
               </div>
 
@@ -360,7 +366,7 @@ export default function Home() {
             </div>
 
             <div className="feature-card">
-              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF8C00] text-white">
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F5C211] text-white">
                 <Zap size={26} />
               </div>
 
@@ -373,14 +379,14 @@ export default function Home() {
           </div>
 
           <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <div className="pillar-card group border-[#004B87]/10">
+            <div className="pillar-card group border-[#0B77C4]/10">
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#004B87] text-white">
+                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B77C4] text-white">
                     <ShieldCheck />
                   </div>
 
-                  <div className="text-sm font-black uppercase tracking-[0.18em] text-[#004B87]">
+                  <div className="text-sm font-black uppercase tracking-[0.18em] text-[#0B77C4]">
                     Pilar 01
                   </div>
 
@@ -397,14 +403,14 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="pillar-card group border-[#FF8C00]/10">
+            <div className="pillar-card group border-[#F5C211]/10">
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF8C00] text-white">
+                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F5C211] text-white">
                     <Car />
                   </div>
 
-                  <div className="text-sm font-black uppercase tracking-[0.18em] text-[#FF8C00]">
+                  <div className="text-sm font-black uppercase tracking-[0.18em] text-[#F5C211]">
                     Pilar 02
                   </div>
 
@@ -425,7 +431,7 @@ export default function Home() {
       </section>
 
       {/* COMPETITION */}
-      <section id="competition" className="bg-[#004B87] px-4 py-24 sm:px-6 lg:px-8">
+      <section id="competition" className="bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
             <div>
@@ -434,7 +440,7 @@ export default function Home() {
               </div>
               <h2 className="mt-4 max-w-3xl text-4xl font-black leading-tight text-white sm:text-5xl">
                 Pilih arena,
-                <span className="text-[#32CD32]"> buat dampak.</span>
+                <span className="text-[#52B437]"> buat dampak.</span>
               </h2>
             </div>
 
@@ -445,9 +451,9 @@ export default function Home() {
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
             {/* HACKATHON */}
-            <div className="competition-card border-[#FF8C00]/40">
+            <div className="competition-card border-[#F5C211]/40">
               <div className="flex items-start justify-between gap-4">
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#FF8C00]/10 px-4 py-2 text-xs font-black tracking-wider text-[#ff980f]">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#F5C211]/10 px-4 py-2 text-xs font-black tracking-wider text-[#F3B200]">
                   MAIN EVENT
                 </div>
 
@@ -456,7 +462,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <h3 className="mt-7 text-3xl font-black">🏆 RPD Challenge</h3>
+              <h3 className="mt-7 text-3xl font-black">RPD Challenge</h3>
 
               <div className="mt-7 space-y-6">
                 <InfoItem
@@ -483,7 +489,7 @@ export default function Home() {
 
               <button
                 onClick={() => scrollToRegistration("hackathon")}
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#FF8C00] px-5 py-4 font-black text-white transition hover:bg-[#ee8200]"
+                className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F5C211] px-5 py-4 font-black text-white transition hover:bg-[#E0AA00]"
               >
                 Daftar RPD Challenge
                 <ArrowRight size={18} />
@@ -491,9 +497,9 @@ export default function Home() {
             </div>
 
             {/* PAPER */}
-            <div className="competition-card border-[#32CD32]/40">
+            <div className="competition-card border-[#52B437]/40">
               <div className="flex items-start justify-between gap-4">
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#32CD32]/10 px-4 py-2 text-xs font-black tracking-wider text-green-700">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#52B437]/10 px-4 py-2 text-xs font-black tracking-wider text-green-700">
                   SIDE EVENT
                 </div>
 
@@ -503,7 +509,7 @@ export default function Home() {
               </div>
 
               <h3 className="mt-7 text-3xl font-black">
-                📄 Paper Presentation
+                Paper Presentation
               </h3>
 
               <div className="mt-7 space-y-6">
@@ -531,7 +537,7 @@ export default function Home() {
 
               <button
                 onClick={() => scrollToRegistration("paper")}
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#32CD32] px-5 py-4 font-black text-[#123918] transition hover:bg-[#2ebd2e]"
+                className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-[#2E6C1C] transition hover:bg-[#449C2B]"
               >
                 Ajukan Paper
                 <FileText size={18} />
@@ -544,8 +550,8 @@ export default function Home() {
       {/* STARTER KIT */}
       <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="starter-box relative overflow-hidden rounded-[36px] bg-[#f1f8f3] p-7 sm:p-10 lg:p-14">
-            <div className="absolute right-[-100px] top-[-100px] h-72 w-72 rounded-full bg-[#32CD32]/20 blur-3xl" />
+          <div className="starter-box relative overflow-hidden rounded-[36px] bg-[#E5F2F9] p-7 sm:p-10 lg:p-14">
+            <div className="absolute right-[-100px] top-[-100px] h-72 w-72 rounded-full bg-[#52B437]/20 blur-3xl" />
 
             <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_0.95fr]">
               <div>
@@ -584,13 +590,13 @@ export default function Home() {
       </section>
 
       {/* TIMELINE */}
-      <section id="timeline" className="bg-[#f7fafc] px-4 py-24 sm:px-6 lg:px-8">
+      <section id="timeline" className="bg-[#F0F7FC] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <div className="section-label">05 / LINIMASA</div>
             <h2 className="section-title mt-4">
               Dari ide hingga
-              <span className="text-[#004B87]"> demo nyata.</span>
+              <span className="text-[#0B77C4]"> demo nyata.</span>
             </h2>
           </div>
 
@@ -606,7 +612,7 @@ export default function Home() {
                 </div>
 
                 <div className="timeline-content">
-                  <div className="text-xs font-black uppercase tracking-[0.2em] text-[#FF8C00]">
+                  <div className="text-xs font-black uppercase tracking-[0.2em] text-[#F5C211]">
                     {item.date}
                   </div>
 
@@ -632,7 +638,7 @@ export default function Home() {
             <div className="section-label justify-center">06 / REGISTRASI</div>
 
             <h2 className="section-title mt-4">
-              Siap ikut <span className="text-[#004B87]">Bhumireka?</span>
+              Siap ikut <span className="text-[#0B77C4]">Bhumireka?</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-slate-600">
@@ -647,7 +653,7 @@ export default function Home() {
               <button
                 onClick={() => setActiveTab("hackathon")}
                 className={`relative px-5 py-5 text-sm font-black transition sm:text-base ${activeTab === "hackathon"
-                  ? "text-[#004B87]"
+                  ? "text-[#0B77C4]"
                   : "text-slate-400 hover:text-slate-700"
                   }`}
               >
@@ -657,14 +663,14 @@ export default function Home() {
                 </div>
 
                 {activeTab === "hackathon" && (
-                  <div className="absolute inset-x-0 bottom-0 h-1 bg-[#FF8C00]" />
+                  <div className="absolute inset-x-0 bottom-0 h-1 bg-[#F5C211]" />
                 )}
               </button>
 
               <button
                 onClick={() => setActiveTab("paper")}
                 className={`relative px-5 py-5 text-sm font-black transition sm:text-base ${activeTab === "paper"
-                  ? "text-[#004B87]"
+                  ? "text-[#0B77C4]"
                   : "text-slate-400 hover:text-slate-700"
                   }`}
               >
@@ -674,7 +680,7 @@ export default function Home() {
                 </div>
 
                 {activeTab === "paper" && (
-                  <div className="absolute inset-x-0 bottom-0 h-1 bg-[#32CD32]" />
+                  <div className="absolute inset-x-0 bottom-0 h-1 bg-[#52B437]" />
                 )}
               </button>
             </div>
@@ -692,7 +698,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="bg-[#004B87] px-4 py-24 sm:px-6 lg:px-8">
+      <section id="faq" className="bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 py-16">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <div className="section-label section-label-light justify-center">
@@ -701,7 +707,7 @@ export default function Home() {
 
             <h2 className="mt-4 text-4xl font-black text-white sm:text-5xl">
               Pertanyaan yang
-              <span className="text-[#32CD32]"> sering muncul.</span>
+              <span className="text-[#52B437]"> sering muncul.</span>
             </h2>
           </div>
 
@@ -724,7 +730,7 @@ export default function Home() {
 
                     <ChevronDown
                       size={20}
-                      className={`shrink-0 text-[#32CD32] transition ${isOpen ? "rotate-180" : ""
+                      className={`shrink-0 text-[#52B437] transition ${isOpen ? "rotate-180" : ""
                         }`}
                     />
                   </button>
@@ -773,7 +779,7 @@ export default function Home() {
 
       {/* CTA */}
       <section className="px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[36px] bg-[#FF8C00] px-6 py-12 sm:px-10 lg:px-14">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[36px] bg-[#F5C211] px-6 py-12 sm:px-10 lg:px-14">
           <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
             <div>
               <div className="text-sm font-black uppercase tracking-[0.2em] text-white/70">
@@ -787,7 +793,7 @@ export default function Home() {
 
             <button
               onClick={() => scrollToRegistration("hackathon")}
-              className="flex shrink-0 items-center gap-2 rounded-2xl bg-white px-6 py-4 font-black text-[#004B87] shadow-lg transition hover:-translate-y-1"
+              className="flex shrink-0 items-center gap-2 rounded-2xl bg-white px-6 py-4 font-black text-[#0B77C4] shadow-lg transition hover:-translate-y-1"
             >
               Mulai Registrasi
               <ArrowRight size={18} />
@@ -797,12 +803,12 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#002f54] px-4 py-12 text-white sm:px-6 lg:px-8">
+      <footer className="bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#32CD32] text-[#123918]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#52B437] text-[#2E6C1C]">
                   <Satellite size={22} />
                 </div>
 
@@ -878,7 +884,7 @@ function InfoItem({
 }) {
   return (
     <div className="flex gap-4">
-      <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#32CD32]" />
+      <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#52B437]" />
 
       <div>
         <div className="font-black">{title}</div>
@@ -901,7 +907,7 @@ function ResourceItem({
       className="group flex items-center justify-between rounded-2xl border border-green-900/10 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="flex items-center gap-4">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#004B87] text-white">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0B77C4] text-white">
           <Download size={18} />
         </div>
 
@@ -913,7 +919,7 @@ function ResourceItem({
 
       <ExternalLink
         size={17}
-        className="text-slate-400 transition group-hover:text-[#004B87]"
+        className="text-slate-400 transition group-hover:text-[#0B77C4]"
       />
     </a>
   );
@@ -923,7 +929,7 @@ function SocialButton({ icon }: { icon: React.ReactNode }) {
   return (
     <a
       href="#"
-      className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-blue-100 transition hover:bg-[#32CD32] hover:text-[#10321a]"
+      className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-blue-100 transition hover:bg-[#52B437] hover:text-[#2E6C1C]"
     >
       {icon}
     </a>
@@ -1072,7 +1078,7 @@ function HackathonForm() {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#FF8C00] px-5 py-4 font-black text-white transition hover:bg-[#ef8200]"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F5C211] px-5 py-4 font-black text-white transition hover:bg-[#E0AA00]"
       >
         Kirim Pendaftaran
         <ArrowRight size={18} />
@@ -1152,7 +1158,7 @@ function PaperForm() {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#32CD32] px-5 py-4 font-black text-[#123918] transition hover:bg-[#2fbd2f]"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-[#2E6C1C] transition hover:bg-[#449C2B]"
       >
         Ajukan Paper
         <FileText size={18} />
