@@ -235,23 +235,6 @@ export default function Home() {
                   <FileText size={18} />
                 </button>
               </div>
-
-              <div className="mt-10 flex flex-wrap items-center gap-5 text-sm font-semibold text-blue-100">
-                <div className="flex items-center gap-2">
-                  <Users size={16} />
-                  80 Mahasiswa
-                </div>
-                <div className="h-1 w-1 rounded-full bg-blue-200" />
-                <div className="flex items-center gap-2">
-                  <BookOpen size={16} />
-                  40 Peneliti / Praktisi
-                </div>
-                <div className="h-1 w-1 rounded-full bg-blue-200" />
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} />
-                  Gratis
-                </div>
-              </div>
             </div>
 
             {/* HERO VISUAL */}
@@ -637,7 +620,7 @@ export default function Home() {
           <div className="text-center">
             <div className="section-label justify-center">06 / REGISTRASI</div>
 
-            <h2 className="section-title mt-4">
+            <h2 className="section-title mx-auto mt-4">
               Siap ikut <span className="text-[#0B77C4]">Bhumireka?</span>
             </h2>
 
@@ -808,12 +791,12 @@ export default function Home() {
           <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#52B437] text-[#2E6C1C]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B77C4] text-white shadow-md">
                   <Satellite size={22} />
                 </div>
 
                 <div>
-                  <div className="font-black tracking-[0.18em]">
+                  <div className="font-black text-white tracking-[0.18em]">
                     BHUMIREKA 2026
                   </div>
                   <div className="text-xs text-blue-200">
@@ -830,7 +813,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h3 className="font-black">Kontak</h3>
+              <h3 className="font-black text-white">Kontak</h3>
 
               <div className="mt-5 space-y-4 text-sm text-blue-200">
                 <a
@@ -852,7 +835,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h3 className="font-black">Social</h3>
+              <h3 className="font-black text-white">Social</h3>
 
               <div className="mt-5 flex gap-3">
                 <SocialButton icon={<Globe size={18} />} />
@@ -1036,9 +1019,9 @@ function HackathonForm() {
           />
 
           <Field
-            label="Institusi"
-            name="institusi"
-            placeholder="Universitas / Institusi"
+            label="Afiliasi"
+            name="afiliasi"
+            placeholder=" Institusi / Universitas / Swasta"
           />
         </div>
       </div>

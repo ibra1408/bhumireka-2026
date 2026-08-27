@@ -178,6 +178,14 @@ button {
   box-shadow: 0 0 0 4px rgba(0, 75, 135, 0.08);
 }
 
+.form-label {
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #334155;
+}
+
 .timeline-row {
   position: relative;
   display: grid;
