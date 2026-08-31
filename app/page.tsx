@@ -957,6 +957,7 @@ function Field({
 function HackathonForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [regId, setRegId] = useState("");
   const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL!;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -980,6 +981,7 @@ function HackathonForm() {
       });
       const json = await res.json();
       if (json.success === true) {
+        setRegId(json.registrationId || "");
         setStatus("success");
         form.reset();
       } else {
@@ -993,13 +995,35 @@ function HackathonForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center gap-4 py-12 text-center">
+      <div className="flex flex-col items-center gap-4 py-8 text-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#52B437]/10 text-[#52B437]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-8 w-8"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
         </div>
-        <h3 className="text-2xl font-black text-[#0f2740]">Pendaftaran Terkirim!</h3>
-        <p className="max-w-md text-slate-500">Terima kasih. Data tim kamu sudah kami terima dan akan segera kami proses.</p>
-        <button onClick={() => setStatus("idle")} className="mt-2 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50">Daftar Tim Lain</button>
+        <h3 className="text-2xl font-black text-[#0f2740]">Pendaftaran Tim Berhasil!</h3>
+        <p className="max-w-md text-slate-500">Terima kasih. Data tim kamu sudah kami terima dan tersimpan di sistem.</p>
+
+        {regId && (
+          <div className="my-2 w-full max-w-sm rounded-2xl border border-[#0B77C4]/20 bg-[#E8F3FA] p-5 shadow-sm">
+            <div className="text-xs font-black uppercase tracking-wider text-[#0B77C4]">
+              ID Pendaftaran Kamu
+            </div>
+            <div className="mt-2 font-mono text-2xl font-black tracking-widest text-[#0f2740]">
+              {regId}
+            </div>
+            <p className="mt-2 text-xs text-slate-500">
+              Simpan ID ini. Digunakan bersama email ketua apabila ingin mengubah data pendaftaran di kemudian hari.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-2 flex flex-wrap justify-center gap-3">
+          <a
+            href="/edit"
+            className="rounded-xl bg-[#0B77C4] px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-[#004B87]"
+          >
+            Edit Data Pendaftaran
+          </a>
+        </div>
       </div>
     );
   }
