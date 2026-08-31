@@ -28,7 +28,7 @@ export default function EditRegistrationPage() {
     namaKetua: "",
     emailKetua: "",
     waKetua: "",
-    institusi: "",
+    afiliasi: "",
     anggota2: "",
     anggota3: "",
     anggota4: "",
@@ -36,49 +36,55 @@ export default function EditRegistrationPage() {
     proposal: "",
   });
 
-  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+  const [searchError, setSearchError] = useState("");
+  const [saveError, setSaveError] = useState("");
+  const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL!;
+
+  const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!registrationId || !email) {
-      return;
-    }
+    if (!registrationId || !email) return;
 
     setLoading(true);
+    setSearchError("");
 
-    /*
-      NANTI:
-      Di sini kita akan melakukan request ke Google Apps Script.
-
-      Contoh:
-
-      fetch("YOUR_WEBHOOK_URL", {
-        method: "POST",
-        body: JSON.stringify({
-          action: "find_registration",
-          registrationId,
-          email,
-        }),
+    try {
+      const params = new URLSearchParams({
+        action: "find_registration",
+        registrationId,
+        email,
       });
-    */
 
-    setTimeout(() => {
+      const res = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+      const json = await res.json();
+
+      if (!json.success) {
+        throw new Error(json.message || "Data tidak ditemukan.");
+      }
+
+      const d = json.data;
+      const anggotaArr: string[] = d.anggota || [];
+
       setForm({
-        namaTim: "Geo Rescue Team",
-        pilar: "Kebencanaan",
-        namaKetua: "Nama Ketua",
-        emailKetua: email,
-        waKetua: "081234567890",
-        institusi: "Universitas Contoh",
-        anggota2: "Anggota Dua",
-        anggota3: "Anggota Tiga",
-        anggota4: "Anggota Empat",
-        anggota5: "",
-        proposal: "https://contoh.com/proposal",
+        namaTim: d.namaTim || "",
+        pilar: d.pilar || "",
+        namaKetua: d.namaKetua || "",
+        emailKetua: d.emailKetua || "",
+        waKetua: d.waKetua || "",
+        afiliasi: d.afiliasi || "",
+        anggota2: anggotaArr[0] || "",
+        anggota3: anggotaArr[1] || "",
+        anggota4: anggotaArr[2] || "",
+        anggota5: anggotaArr[3] || "",
+        proposal: d.proposal || "",
       });
 
       setVerified(true);
+    } catch (err: unknown) {
+      setSearchError(err instanceof Error ? err.message : "Terjadi kesalahan.");
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   const handleChange = (field: keyof typeof form, value: string) => {
@@ -90,28 +96,47 @@ export default function EditRegistrationPage() {
     setSaved(false);
   };
 
-  const handleSave = (event: FormEvent<HTMLFormElement>) => {
+  const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
+    setSaveError("");
+    setSaved(false);
 
-    /*
-      NANTI:
-      Data dikirim ke Google Apps Script.
-
-      Contoh payload:
-
-      {
+    try {
+      const payload = new URLSearchParams({
         action: "update_registration",
         registrationId,
         email,
-        ...form
+        namaTim: form.namaTim,
+        pilar: form.pilar,
+        namaKetua: form.namaKetua,
+        emailKetua: form.emailKetua,
+        waKetua: form.waKetua,
+        afiliasi: form.afiliasi,
+        anggota2: form.anggota2,
+        anggota3: form.anggota3,
+        anggota4: form.anggota4,
+        anggota5: form.anggota5,
+        proposal: form.proposal,
+      });
+
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString(),
+      });
+      const json = await res.json();
+
+      if (!json.success) {
+        throw new Error(json.message || "Gagal menyimpan perubahan.");
       }
-    */
 
-    setSaved(true);
-
-    setTimeout(() => {
-      setSaved(false);
-    }, 4000);
+      setSaved(true);
+    } catch (err: unknown) {
+      setSaveError(err instanceof Error ? err.message : "Terjadi kesalahan.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,8 +189,7 @@ export default function EditRegistrationPage() {
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl leading-7 text-blue-100">
-            Perbarui informasi tim hackathon tanpa perlu membuat akun. Gunakan
-            ID pendaftaran dan email ketua untuk mengakses data.
+            Gunakan ID pendaftaran dan email ketua untuk mengakses data.
           </p>
         </div>
       </section>
@@ -227,7 +251,7 @@ export default function EditRegistrationPage() {
                       type="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      placeholder="email.ketua@example.com"
+                      placeholder="email@contoh.com"
                       className="form-input pl-11"
                       required
                     />
@@ -260,9 +284,24 @@ export default function EditRegistrationPage() {
                   disabled={loading}
                   className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F5C211] px-5 py-4 font-black text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#E0AA00] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <Search size={19} />
-                  {loading ? "Mencari Data..." : "Cari Data Pendaftaran"}
+                  {loading ? (
+                    <>
+                      <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+                      Mencari Data...
+                    </>
+                  ) : (
+                    <>
+                      <Search size={19} />
+                      Cari Data Pendaftaran
+                    </>
+                  )}
                 </button>
+
+                {searchError && (
+                  <div className="rounded-2xl bg-red-50 p-4 text-sm font-semibold text-red-600">
+                    ⚠️ {searchError}
+                  </div>
+                )}
               </form>
 
               <div className="border-t border-slate-200 bg-slate-50 px-6 py-4 text-center text-xs text-slate-400">
@@ -410,9 +449,9 @@ export default function EditRegistrationPage() {
                         <label className="form-label">Institusi</label>
 
                         <input
-                          value={form.institusi}
+                          value={form.afiliasi}
                           onChange={(event) =>
-                            handleChange("institusi", event.target.value)
+                            handleChange("afiliasi", event.target.value)
                           }
                           className="form-input"
                           required
@@ -431,7 +470,7 @@ export default function EditRegistrationPage() {
                         ["anggota2", "Anggota 2"],
                         ["anggota3", "Anggota 3"],
                         ["anggota4", "Anggota 4"],
-                        ["anggota5", "Anggota 5 (Opsional)"],
+                        ["anggota5", "Anggota 5"],
                       ].map(([field, label]) => (
                         <div key={field}>
                           <label className="form-label">{label}</label>
@@ -488,11 +527,27 @@ export default function EditRegistrationPage() {
 
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#449C2B]"
+                    disabled={loading}
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#449C2B] disabled:opacity-60"
                   >
-                    <CheckCircle2 size={20} />
-                    Simpan Perubahan
+                    {loading ? (
+                      <>
+                        <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+                        Menyimpan...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 size={20} />
+                        Simpan Perubahan
+                      </>
+                    )}
                   </button>
+
+                  {saveError && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-600">
+                      ⚠️ {saveError}
+                    </div>
+                  )}
 
                   {saved && (
                     <div className="flex items-center gap-3 rounded-2xl border border-[#52B437]/20 bg-[#52B437]/10 p-4 text-sm font-bold text-green-700">

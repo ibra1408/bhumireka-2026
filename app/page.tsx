@@ -191,31 +191,31 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 py-16">
+      <section className="relative min-h-screen lg:h-screen w-full overflow-hidden bg-gradient-to-br from-[#001228] via-[#004B87] to-[#00336B] px-4 pt-24 pb-6 flex flex-col justify-between">
         <div className="absolute inset-0 -z-20 bg-[#0B77C4]" />
 
         <div className="absolute right-[-10%] top-[15%] -z-10 h-[500px] w-[500px] rounded-full bg-[#52B437]/20 blur-3xl" />
         <div className="absolute bottom-[-15%] left-[-10%] -z-10 h-[550px] w-[550px] rounded-full bg-[#F5C211]/20 blur-3xl" />
 
-        <div className="mx-auto flex min-h-screen max-w-7xl items-center px-4 pb-16 pt-32 sm:px-6 lg:px-8">
-          <div className="grid w-full items-center gap-14 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="mx-auto flex w-full max-w-7xl my-auto items-center px-4 sm:px-6 lg:px-8">
+          <div className="grid w-full items-center gap-8 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold tracking-wider text-white backdrop-blur">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold tracking-wider text-white backdrop-blur">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[#52B437]" />
                 INOVASI PRESISI UNTUK MITIGASI MANDIRI
               </div>
 
-              <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-[92px]">
+              <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-[84px]">
                 BHUMIREKA
                 <span className="block text-[#52B437]">2026</span>
               </h1>
 
-              <p className="mt-7 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
+              <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg">
                 Perancangan Purwarupa Sederhana Teknologi GNSS untuk
                 Menyelesaikan Masalah Bencana Alam &amp; Sosial.
               </p>
 
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={() => scrollToRegistration("hackathon")}
                   className="group flex items-center justify-center gap-3 rounded-2xl bg-[#F5C211] px-6 py-4 font-black text-white shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
@@ -238,7 +238,7 @@ export default function Home() {
             </div>
 
             {/* HERO VISUAL */}
-            <div className="relative mx-auto w-full max-w-xl">
+            <div className="relative mx-auto w-full max-w-md lg:max-w-lg">
               <div className="relative aspect-square overflow-hidden rounded-[40px] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur">
                 <div className="absolute inset-0 tech-radar opacity-70" />
 
@@ -282,12 +282,14 @@ export default function Home() {
           </div>
         </div>
 
-        <a
-          href="#why"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 transition hover:text-white"
-        >
-          <ArrowDown className="animate-bounce" />
-        </a>
+        <div className="flex justify-center pt-2 pb-2">
+          <a
+            href="#why"
+            className="text-white/60 transition hover:text-white"
+          >
+            <ArrowDown className="animate-bounce" />
+          </a>
+        </div>
       </section>
 
       {/* WHY BHUMIREKA */}
@@ -534,7 +536,6 @@ export default function Home() {
       <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="starter-box relative overflow-hidden rounded-[36px] bg-[#E5F2F9] p-7 sm:p-10 lg:p-14">
-            <div className="absolute right-[-100px] top-[-100px] h-72 w-72 rounded-full bg-[#52B437]/20 blur-3xl" />
 
             <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_0.95fr]">
               <div>
@@ -954,15 +955,57 @@ function Field({
 }
 
 function HackathonForm() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL!;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    const payload: Record<string, string> = { action: "register_hackathon" };
+    fd.forEach((value, key) => {
+      payload[key] = String(value);
+    });
+
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(payload).toString(),
+      });
+      const json = await res.json();
+      if (json.success === true) {
+        setStatus("success");
+        form.reset();
+      } else {
+        throw new Error(json.message || "Gagal mengirim data.");
+      }
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Terjadi kesalahan. Coba lagi.");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="flex flex-col items-center gap-4 py-12 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#52B437]/10 text-[#52B437]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-8 w-8"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+        </div>
+        <h3 className="text-2xl font-black text-[#0f2740]">Pendaftaran Terkirim!</h3>
+        <p className="max-w-md text-slate-500">Terima kasih. Data tim kamu sudah kami terima dan akan segera kami proses.</p>
+        <button onClick={() => setStatus("idle")} className="mt-2 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50">Daftar Tim Lain</button>
+      </div>
+    );
+  }
+
   return (
-    <form
-      action="YOUR_WEBHOOK_URL"
-      method="POST"
-      className="space-y-8"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <form className="space-y-8" onSubmit={handleSubmit}>
       <div>
         <div className="mb-6">
           <h3 className="text-2xl font-black">Form Tim Hackathon</h3>
@@ -974,7 +1017,7 @@ function HackathonForm() {
         <div className="grid gap-5 md:grid-cols-2">
           <Field
             label="Nama Tim"
-            name="nama_tim"
+            name="namaTim"
             placeholder="Contoh: GeoRescue"
           />
 
@@ -987,8 +1030,8 @@ function HackathonForm() {
             </label>
 
             <select
-              id="pilar_fokus"
-              name="pilar_fokus"
+              id="pilar"
+              name="pilar"
               required
               className="form-input appearance-none"
             >
@@ -1000,20 +1043,20 @@ function HackathonForm() {
 
           <Field
             label="Nama Ketua"
-            name="nama_ketua"
+            name="namaKetua"
             placeholder="Nama lengkap"
           />
 
           <Field
             label="Email Ketua"
-            name="email_ketua"
+            name="emailKetua"
             type="email"
             placeholder="email@contoh.com"
           />
 
           <Field
             label="WA Ketua"
-            name="wa_ketua"
+            name="waKetua"
             type="tel"
             placeholder="08xxxxxxxxxx"
           />
@@ -1034,7 +1077,7 @@ function HackathonForm() {
             <Field
               key={number}
               label={`Nama Anggota ${number}`}
-              name={`anggota_${number}`}
+              name={`anggota${number}`}
               placeholder={`Nama anggota ${number}`}
               required={false}
             />
@@ -1045,41 +1088,91 @@ function HackathonForm() {
       <div>
         <Field
           label="Tautan Proposal"
-          name="tautan_proposal"
+          name="proposal"
           type="url"
           placeholder="https://..."
         />
       </div>
 
-      <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-500">
-        UI ini sudah disiapkan menggunakan struktur form POST. Ganti
-        <code className="mx-1 rounded bg-slate-200 px-1.5 py-0.5 text-xs">
-          YOUR_WEBHOOK_URL
-        </code>
-        dengan endpoint webhook Anda ketika backend siap.
-      </div>
+      {status === "error" && (
+        <div className="rounded-2xl bg-red-50 p-4 text-sm font-semibold text-red-600">
+          ⚠️ {errorMsg}
+        </div>
+      )}
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F5C211] px-5 py-4 font-black text-white transition hover:bg-[#E0AA00]"
+        disabled={status === "loading"}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F5C211] px-5 py-4 font-black text-white transition hover:bg-[#E0AA00] disabled:opacity-60"
       >
-        Kirim Pendaftaran
-        <ArrowRight size={18} />
+        {status === "loading" ? (
+          <>
+            <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+            Mengirim...
+          </>
+        ) : (
+          <>
+            Kirim Pendaftaran
+            <ArrowRight size={18} />
+          </>
+        )}
       </button>
     </form>
   );
 }
 
 function PaperForm() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL!;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    const payload: Record<string, string> = { action: "register_paper" };
+    fd.forEach((value, key) => {
+      payload[key] = String(value);
+    });
+
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(payload).toString(),
+      });
+      const json = await res.json();
+      if (json.success === true) {
+        setStatus("success");
+        form.reset();
+      } else {
+        throw new Error(json.message || "Gagal mengirim data.");
+      }
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Terjadi kesalahan. Coba lagi.");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="flex flex-col items-center gap-4 py-12 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#52B437]/10 text-[#52B437]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-8 w-8"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+        </div>
+        <h3 className="text-2xl font-black text-[#0f2740]">Paper Terkirim!</h3>
+        <p className="max-w-md text-slate-500">Terima kasih. Pengajuan paper kamu sudah kami terima dan akan segera kami tinjau.</p>
+        <button onClick={() => setStatus("idle")} className="mt-2 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50">Ajukan Paper Lain</button>
+      </div>
+    );
+  }
+
   return (
-    <form
-      action="YOUR_WEBHOOK_URL"
-      method="POST"
-      className="space-y-8"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <form className="space-y-8" onSubmit={handleSubmit}>
       <div>
         <div className="mb-6">
           <h3 className="text-2xl font-black">Form Paper Individu</h3>
@@ -1091,7 +1184,7 @@ function PaperForm() {
         <div className="grid gap-5 md:grid-cols-2">
           <Field
             label="Nama Lengkap"
-            name="nama_lengkap"
+            name="namaLengkap"
             placeholder="Nama lengkap"
           />
 
@@ -1104,21 +1197,21 @@ function PaperForm() {
 
           <Field
             label="Kontak WA"
-            name="kontak_wa"
+            name="kontakWa"
             type="tel"
             placeholder="08xxxxxxxxxx"
           />
 
           <Field
             label="Institusi"
-            name="institusi"
+            name="afiliasi"
             placeholder="Universitas / Institusi"
           />
 
           <div className="md:col-span-2">
             <Field
               label="Judul Paper"
-              name="judul_paper"
+              name="judulPaper"
               placeholder="Masukkan judul paper"
             />
           </div>
@@ -1126,7 +1219,7 @@ function PaperForm() {
           <div className="md:col-span-2">
             <Field
               label="Tautan Abstrak"
-              name="tautan_abstrak"
+              name="tautanAbstrak"
               type="url"
               placeholder="https://..."
             />
@@ -1134,17 +1227,28 @@ function PaperForm() {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-500">
-        Form frontend siap menerima endpoint webhook eksternal menggunakan
-        metode POST.
-      </div>
+      {status === "error" && (
+        <div className="rounded-2xl bg-red-50 p-4 text-sm font-semibold text-red-600">
+          ⚠️ {errorMsg}
+        </div>
+      )}
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-[#2E6C1C] transition hover:bg-[#449C2B]"
+        disabled={status === "loading"}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#52B437] px-5 py-4 font-black text-[#2E6C1C] transition hover:bg-[#449C2B] disabled:opacity-60"
       >
-        Ajukan Paper
-        <FileText size={18} />
+        {status === "loading" ? (
+          <>
+            <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+            Mengirim...
+          </>
+        ) : (
+          <>
+            Ajukan Paper
+            <FileText size={18} />
+          </>
+        )}
       </button>
     </form>
   );
