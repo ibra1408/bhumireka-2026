@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { findRegistration, updateRegistration } from "@/lib/registrations";
 import {
   AlertTriangle,
   ArrowLeft,
@@ -38,7 +39,6 @@ export default function EditRegistrationPage() {
 
   const [searchError, setSearchError] = useState("");
   const [saveError, setSaveError] = useState("");
-  const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL!;
 
   const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,20 +49,13 @@ export default function EditRegistrationPage() {
     setSearchError("");
 
     try {
-      const params = new URLSearchParams({
-        action: "find_registration",
-        registrationId,
-        email,
-      });
+      const res = await findRegistration(registrationId, email);
 
-      const res = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
-      const json = await res.json();
-
-      if (!json.success) {
-        throw new Error(json.message || "Data tidak ditemukan.");
+      if (!res.success) {
+        throw new Error("Data tidak ditemukan.");
       }
 
-      const d = json.data;
+      const d = res.data;
       const anggotaArr: string[] = d.anggota || [];
 
       setForm({
@@ -103,10 +96,7 @@ export default function EditRegistrationPage() {
     setSaved(false);
 
     try {
-      const payload = new URLSearchParams({
-        action: "update_registration",
-        registrationId,
-        email,
+      const res = await updateRegistration(registrationId, email, {
         namaTim: form.namaTim,
         pilar: form.pilar,
         namaKetua: form.namaKetua,
@@ -120,15 +110,8 @@ export default function EditRegistrationPage() {
         proposal: form.proposal,
       });
 
-      const res = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payload.toString(),
-      });
-      const json = await res.json();
-
-      if (!json.success) {
-        throw new Error(json.message || "Gagal menyimpan perubahan.");
+      if (!res.success) {
+        throw new Error("Gagal menyimpan perubahan.");
       }
 
       setSaved(true);
